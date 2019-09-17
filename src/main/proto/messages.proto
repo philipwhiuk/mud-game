@@ -1,0 +1,8 @@
+syntax = "proto3";
+
+option java_package = "com.whiuk.philip.mud";
+option java_outer_classname = "Messages";
+
+message Message {
+    string text = 1;
+}

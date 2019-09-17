@@ -1,11 +1,14 @@
 package com.whiuk.philip.mud.client;
 
+import com.whiuk.philip.mud.Messages;
 import com.whiuk.philip.mud.MudConstants;
 
 import java.io.*;
 import java.net.ConnectException;
 import java.net.Socket;
 import java.util.Optional;
+
+import static com.whiuk.philip.mud.Messages.*;
 
 public class MudClient {
     private static final String VERSION = "v0.0.1";
@@ -31,14 +34,14 @@ public class MudClient {
 
     class ClientSocketHandler extends Thread {
 
-        private final BufferedReader input;
-        private final BufferedWriter output;
+        private final InputStream input;
+        private final OutputStream output;
         private final Socket socket;
 
         ClientSocketHandler(Socket socket) throws IOException {
             this.socket = socket;
-            input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            output = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+            input = socket.getInputStream();
+            output = socket.getOutputStream();
         }
 
         @Override
@@ -46,8 +49,10 @@ public class MudClient {
             socketConnected();
             String line;
             try {
-                while (connected && (line = input.readLine()) != null) {
-                    receivedMessage(line);
+                int messageLength;
+                while (connected) {
+                    Message message = Message.parseDelimitedFrom(input);
+                    receivedMessage(message.getText());
                 }
             } catch (IOException e) {
                 handleNetworkError();
@@ -56,8 +61,8 @@ public class MudClient {
 
         void sendMessage(String s) {
             try {
-                output.write(s);
-                output.newLine();
+                Message.newBuilder()
+                        .setText(s).build().writeDelimitedTo(output);
                 output.flush();
             } catch (IOException e) {
                 handleNetworkError();

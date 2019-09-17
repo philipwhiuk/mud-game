@@ -1,5 +1,6 @@
 package com.whiuk.philip.mud.server;
 
+import com.whiuk.philip.mud.Messages;
 import com.whiuk.philip.mud.MudConstants;
 
 import java.io.*;
@@ -40,8 +41,8 @@ public class MudServer {
     class SocketThread extends Thread {
         private final Socket socket;
         private final long id;
-        private final BufferedReader inputStream;
-        private final BufferedWriter outputStream;
+        private final InputStream inputStream;
+        private final OutputStream outputStream;
         private SocketState state = SocketState.WAITING_FOR_VERSION;
         private Client client;
 
@@ -49,15 +50,15 @@ public class MudServer {
             super("SocketThread" + id);
             this.id = id;
             this.socket = socket;
-            this.inputStream = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            this.outputStream = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+            this.inputStream = socket.getInputStream();
+            this.outputStream = socket.getOutputStream();
         }
 
         public void run() {
-            String line;
             try {
-                while ((line = inputStream.readLine()) != null) {
-                    processMessage(line);
+                while (running) {
+                    Messages.Message message = Messages.Message.parseDelimitedFrom(inputStream);
+                    processMessage(message.getText());
                 }
             } catch (IOException e) {
                 disconnectSocket(id, socket);
@@ -81,8 +82,7 @@ public class MudServer {
 
         void sendMessage(String message) {
             try {
-                outputStream.write(message);
-                outputStream.newLine();
+                Messages.Message.newBuilder().setText(message).build().writeDelimitedTo(outputStream);
                 outputStream.flush();
             } catch (IOException e) {
                 disconnectSocket(id, socket);
