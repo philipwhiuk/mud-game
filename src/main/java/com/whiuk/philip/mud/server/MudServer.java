@@ -124,16 +124,16 @@ public class MudServer {
                 loadChunk(reader);
             }
 
-            String[] startingChunkCoOrds = reader.readLine().split(","); //5,5
-            int startingChunkX = Integer.parseInt(startingChunkCoOrds[0]);
-            int startingChunkY = Integer.parseInt(startingChunkCoOrds[1]);
+            String[] startingChunkCoordinates = reader.readLine().split(","); //5,5
+            int startingChunkX = Integer.parseInt(startingChunkCoordinates[0]);
+            int startingChunkY = Integer.parseInt(startingChunkCoordinates[1]);
             startingChunk = world.map[startingChunkX][startingChunkY];
 
 
-            String[] startingLocationCoOrds = reader.readLine().split(","); //1,1,0
-            int startingLocationX = Integer.parseInt(startingLocationCoOrds[0]);
-            int startingLocationY = Integer.parseInt(startingLocationCoOrds[1]);
-            int startingLocationZ = Integer.parseInt(startingLocationCoOrds[2]);
+            String[] startingLocationCoordinates = reader.readLine().split(","); //1,1,0
+            int startingLocationX = Integer.parseInt(startingLocationCoordinates[0]);
+            int startingLocationY = Integer.parseInt(startingLocationCoordinates[1]);
+            int startingLocationZ = Integer.parseInt(startingLocationCoordinates[2]);
             startingLocation = startingChunk.map[startingLocationX][startingLocationY][startingLocationZ];
         }
     }
@@ -155,18 +155,18 @@ public class MudServer {
             String id = reader.readLine();
             //TODO old thing not new thing
             Thing thing = thingStore.get(id).create();
-            String[] thingCoOrds = reader.readLine().split(",");
-            int thingX = Integer.parseInt(thingCoOrds[0]);
-            int thingY = Integer.parseInt(thingCoOrds[1]);
-            int thingZ = Integer.parseInt(thingCoOrds[2]);
+            String[] thingCoordinates = reader.readLine().split(",");
+            int thingX = Integer.parseInt(thingCoordinates[0]);
+            int thingY = Integer.parseInt(thingCoordinates[1]);
+            int thingZ = Integer.parseInt(thingCoordinates[2]);
 
             chunkMap[thingX][thingY][thingZ].add(thing);
         }
 
 
-        String[] chunkCoOrds = reader.readLine().split(",");
-        int chunkX = Integer.parseInt(chunkCoOrds[0]);
-        int chunkY = Integer.parseInt(chunkCoOrds[1]);
+        String[] chunkCoordinates = reader.readLine().split(",");
+        int chunkX = Integer.parseInt(chunkCoordinates[0]);
+        int chunkY = Integer.parseInt(chunkCoordinates[1]);
         world.map[chunkX][chunkY] = chunk;
     }
 

@@ -1,6 +1,5 @@
 package com.whiuk.philip.mud.client;
 
-import com.whiuk.philip.mud.Messages;
 import com.whiuk.philip.mud.MudConstants;
 
 import java.io.*;
@@ -47,9 +46,7 @@ public class MudClient {
         @Override
         public void run() {
             socketConnected();
-            String line;
             try {
-                int messageLength;
                 while (connected) {
                     Message message = Message.parseDelimitedFrom(input);
                     receivedMessage(message.getText());
@@ -92,7 +89,7 @@ public class MudClient {
     private final BufferedReader consoleReader;
     private final String outputPrefix;
 
-    MudClient(String outputPrefix) throws IOException {
+    private MudClient(String outputPrefix) throws IOException {
         this.outputPrefix = outputPrefix;
         consoleReader = new BufferedReader(new InputStreamReader(System.in));
         printMessage("MUD Client " + VERSION);
