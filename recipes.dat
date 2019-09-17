@@ -1,0 +1,15 @@
+2
+CHOP-TREE,0,100,false,true,false,true,0,0,1,1
+FELLED-TREE
+Woodcutting,10
+You start chopping down the tree
+You successfully chop down the now FELLED-TREE
+You fail to cut down the tree
+You stop chopping down the tree
+CUT-TREE-TO-LOGS,0,100,false,true,false,true,0,1,0,1
+LOG,5
+Woodcutting,5
+You start cutting the tree into logs
+You successfully chop the tree into LOGs
+You fail to chop up the tree
+You stopping chopping up the tree"

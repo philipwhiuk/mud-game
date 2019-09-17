@@ -1,0 +1,11 @@
+5
+Item,LOG,Log,0
+Object,FELLED-TREE,1
+A mighty tree, cut down and now lying on the ground,
+AXE,1
+LOG,CUT-TREE-TO-LOGS
+Animal,SHEEP,3,HERBIVORE
+Four legs and lots of wool.
+Animal,WOLF,6,CARNIVORE
+Paws, teeth and a taste for farm animals.
+Tree,OAK-TREE
