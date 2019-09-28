@@ -1,0 +1,48 @@
+[
+  {
+    "id": "CHOP-TREE",
+    "skillRequirements": [],
+    "percentageSuccessChance": 100,
+    "consumeItem": false,
+    "consumeTargetOnSuccess": true,
+    "targetMustBeInInventory": false,
+    "targetMustNotBeInInventory": true,
+    "consumables": [],
+    "successResultItems": [],
+    "successResultTargets": ["FELLED-TREE"],
+    "experienceGained": [
+      {
+        "skill": "Woodcutting",
+        "xp": 10
+      }
+    ],
+    "startMessage": "You start chopping down the tree",
+    "successMessage": "You successfully chop down the now FELLED-TREE",
+    "failureMessage": "You fail to cut down the tree",
+    "cancelledMessage": "You stop chopping down the tree"
+  },{
+  "id": "CUT-TREE-TO-LOGS",
+  "skillRequirements": [],
+  "percentageSuccessChance": 100,
+  "consumeItem": false,
+  "consumeTargetOnSuccess": true,
+  "targetMustBeInInventory": false,
+  "targetMustNotBeInInventory": true,
+  "consumables": [],
+  "successResultItems": [{
+    "item": "LOG",
+    "quantity": 5
+  }],
+  "successResultTargets": [],
+  "experienceGained": [
+    {
+      "skill": "Woodcutting",
+      "xp": 5
+    }
+  ],
+  "startMessage": "You start cutting the tree into logs",
+  "successMessage": "You successfully chop the tree into LOGs",
+  "failureMessage": "You fail to chop up the tree",
+  "cancelledMessage": "You stopping chopping up the tree"
+}
+]

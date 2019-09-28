@@ -1,12 +1,17 @@
 # Features
 
-## Game World
+## Game
 
 * Chunk-based
 * Each chunk divided into locations (rooms)
 * Doors that open and shut
-* 2 NPC types
+* NPCs
 * Multiple recipes
+* JSON data format
+
+## Scenario
+
+* 2 NPC types
 
 ## Skills
 

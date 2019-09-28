@@ -1,0 +1,41 @@
+[
+  {
+    "type": "Item",
+    "id": "LOG",
+    "name": "Log",
+    "recipes": []
+  },
+  {
+    "type": "Object",
+    "id": "FELLED-TREE",
+    "recipes": [
+      {
+        "itemType": "AXE",
+        "recipes": [
+          {
+            "id": "LOG",
+            "recipeId": "CUT-TREE-TO-LOGS"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "Animal",
+    "id": "SHEEP",
+    "maxHealth": 3,
+    "feedingType": "HERBIVORE",
+    "description": "Four legs and lots of wool."
+  },
+  {
+    "type": "Animal",
+    "id": "WOLF",
+    "maxHealth": 6,
+    "feedingType": "CARNIVORE",
+    "description": "Paws, teeth and a taste for farm animals."
+  },
+  {
+    "type": "Tree",
+    "id": "OAK-TREE"
+  }
+]

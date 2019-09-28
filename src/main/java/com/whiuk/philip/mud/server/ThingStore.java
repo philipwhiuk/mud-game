@@ -1,6 +1,10 @@
 package com.whiuk.philip.mud.server;
 
-import java.io.BufferedReader;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
@@ -9,51 +13,66 @@ import java.util.Map;
 public class ThingStore {
     private HashMap<String, ThingType> thingTypes;
 
-    ThingStore() throws IOException {
-        loadThingTypes(new BufferedReader(new FileReader("things.dat")));
+    ThingStore() throws IOException, ParseException {
+        JSONParser jsonParser = new JSONParser();
+        try (FileReader reader = new FileReader("things.json")) {
+            JSONArray thingTypesData = (JSONArray) jsonParser.parse(reader);
+            loadThingTypes(thingTypesData);
+        }
     }
 
-    private void loadThingTypes(BufferedReader reader) throws IOException {
+    private void loadThingTypes(JSONArray thingTypesData) {
         thingTypes = new HashMap<>();
-        int count = Integer.parseInt(reader.readLine());
-        for (int i = 0; i < count; i++) {
-            String[] data = reader.readLine().split(",");
+        for (Object aThingTypesData : thingTypesData) {
+            JSONObject thingTypeData = (JSONObject) aThingTypesData;
             ThingType thing;
-            switch (data[0]) {
+            String type = (String) thingTypeData.get("type");
+            String id = (String) thingTypeData.get("id");
+            switch (type) {
                 case "Animal":
-                    thing = new AnimalType(data[1], reader.readLine(), Integer.parseInt(data[2]), FeedingType.valueOf(data[3]));
+                    thing = new AnimalType(
+                            id,
+                            (String) thingTypeData.get("description"),
+                            ((Long) thingTypeData.get("maxHealth")).intValue(),
+                            FeedingType.valueOf((String) thingTypeData.get("feedingType")));
                     break;
                 case "Equipment":
-                    thing = new EquipmentType(data[1], data[2], Slot.valueOf(data[3]));
+                    thing = new EquipmentType(id,
+                            (String) thingTypeData.get("name"),
+                            Slot.valueOf((String) thingTypeData.get("slot")));
                     break;
                 case "Item":
-                    thing = new ItemType(data[1], data[2], parseRecipes(reader, Integer.parseInt(data[3])));
+                    thing = new ItemType(id,
+                            (String) thingTypeData.get("name"),
+                            parseRecipes((JSONArray) thingTypeData.get("recipes")));
                     break;
                 case "Object":
-                    thing = new ObjectType(data[1], reader.readLine(), parseRecipes(reader, Integer.parseInt(data[2])));
+                    thing = new ObjectType(id, (String) thingTypeData.get("description"), parseRecipes((JSONArray) thingTypeData.get("recipes")));
                     break;
                 case "Tree":
-                    thing = new TreeType(data[1]);
+                    thing = new TreeType(id);
                     break;
                 default:
-                    throw new UnsupportedOperationException(data[0]);
+                    throw new UnsupportedOperationException(type);
             }
-            thingTypes.put(data[1], thing);
+            thingTypes.put(id, thing);
         }
 
     }
 
-    private Map<String, Map<String, String>> parseRecipes(BufferedReader reader, int itemTypeCount) throws IOException {
+    private Map<String, Map<String, String>> parseRecipes(JSONArray recipesData) {
         Map<String, Map<String, String>> recipes = new HashMap<>();
-        for (int i = 0; i < itemTypeCount; i++) {
-            String[] itemTypeData = reader.readLine().split(",");
+        for (Object aRecipesData : recipesData) {
+            JSONObject itemTypeData = (JSONObject) aRecipesData;
             Map<String, String> itemTypeRecipes = new HashMap<>();
-            int recipeCount = Integer.parseInt(itemTypeData[1]);
-            for (int j = 0; j < recipeCount ; j++) {
-                String[] recipeData = reader.readLine().split(",");
-                itemTypeRecipes.put(recipeData[0], recipeData[1]);
+            JSONArray itemTypeRecipesData = (JSONArray) itemTypeData.get("recipes");
+            for (Object anItemTypeRecipesData : itemTypeRecipesData) {
+                JSONObject recipeData = (JSONObject) anItemTypeRecipesData;
+                itemTypeRecipes.put(
+                        (String) recipeData.get("id"),
+                        (String) recipeData.get("recipeId"));
             }
-            recipes.put(itemTypeData[0], itemTypeRecipes);
+            recipes.put((String) itemTypeData.get("itemType"), itemTypeRecipes);
         }
         return recipes;
     }

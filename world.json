@@ -1,0 +1,57 @@
+{
+    "x": 10,
+    "y": 10,
+    "chunks": [
+        {
+            "biome": "PLAINS",
+            "locations": [
+                "SURFACE_FLAT",
+                "SURFACE_FLAT",
+                "SURFACE_FLAT",
+                "SURFACE_FLAT",
+                "SURFACE_FLAT",
+                "SURFACE_FLAT",
+                "SURFACE_FLAT",
+                "SURFACE_FLAT",
+                "SURFACE_FLAT",
+                "UNDERGROUND_SOLID_ROCK",
+                "UNDERGROUND_SOLID_ROCK",
+                "UNDERGROUND_SOLID_ROCK",
+                "UNDERGROUND_SOLID_ROCK",
+                "UNDERGROUND_SOLID_ROCK",
+                "UNDERGROUND_SOLID_ROCK",
+                "UNDERGROUND_SOLID_ROCK",
+                "UNDERGROUND_SOLID_ROCK",
+                "UNDERGROUND_SOLID_ROCK",
+                "UNDERGROUND_SOLID_ROCK",
+                "UNDERGROUND_SOLID_ROCK",
+                "UNDERGROUND_SOLID_ROCK",
+                "UNDERGROUND_SOLID_ROCK",
+                "UNDERGROUND_SOLID_ROCK",
+                "UNDERGROUND_SOLID_ROCK",
+                "UNDERGROUND_SOLID_ROCK",
+                "UNDERGROUND_SOLID_ROCK",
+                "UNDERGROUND_SOLID_ROCK"
+            ],
+            "things": [
+                {
+                    "type":"OAK-TREE",
+                    "x": 1,
+                    "y": 1,
+                    "z": 0
+                }
+            ],
+            "x": 5,
+            "y": 5
+        }
+    ],
+    "startingChunk": {
+        "x": 5,
+        "y": 5
+    },
+    "startingLocation": {
+        "x": 1,
+        "y": 1,
+        "z": 0
+    }
+}

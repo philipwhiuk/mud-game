@@ -21,4 +21,4 @@
 
 ### Technical Improvements
 
-* JSON and binary data format usage instead of messy CSV-like data
+* Binary data format usage

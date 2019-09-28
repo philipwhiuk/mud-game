@@ -2,6 +2,10 @@ package com.whiuk.philip.mud.server;
 
 import com.whiuk.philip.mud.Messages;
 import com.whiuk.philip.mud.MudConstants;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 import java.io.*;
 import java.net.ServerSocket;
@@ -17,7 +21,7 @@ public class MudServer {
         try {
             MudServer mudServer = new MudServer(args.length > 0 ? args[0] : "");
             mudServer.run();
-        } catch (IOException e) {
+        } catch (IOException | ParseException e) {
             e.printStackTrace();
             System.exit(1);
         }
@@ -105,7 +109,7 @@ public class MudServer {
     private Location startingLocation;
     private boolean running = true;
 
-    private MudServer(String outputPrefix) throws IOException {
+    private MudServer(String outputPrefix) throws IOException, ParseException {
         this.outputPrefix = outputPrefix;
         ExperienceTable.initializeExpTable();
         thingStore = new ThingStore();
@@ -114,59 +118,68 @@ public class MudServer {
         accountManager.init(world, startingChunk, startingLocation);
     }
 
-    private void loadWorld() throws IOException {
-        try (BufferedReader reader = new BufferedReader(new FileReader("world.dat"))) {
-            String[] worldSize = reader.readLine().split(",");
-            world = new World(Integer.parseInt(worldSize[0]), Integer.parseInt(worldSize[1]));
+    private void loadWorld() throws IOException, ParseException {
+        JSONParser jsonParser = new JSONParser();
+        try (FileReader reader = new FileReader("world.json")) {
+            JSONObject worldData = (JSONObject) jsonParser.parse(reader);
+            int x = ((Long) worldData.get("x")).intValue();
+            int y = ((Long) worldData.get("x")).intValue();
 
-            int chunkCount = Integer.parseInt(reader.readLine());
-            for (int i = 0; i < chunkCount; i++) {
-                loadChunk(reader);
+            world = new World(x,y);
+
+            JSONArray chunks = (JSONArray) worldData.get("chunks");
+
+            for (Object chunk : chunks) {
+                loadChunk((JSONObject) chunk);
             }
 
-            String[] startingChunkCoordinates = reader.readLine().split(","); //5,5
-            int startingChunkX = Integer.parseInt(startingChunkCoordinates[0]);
-            int startingChunkY = Integer.parseInt(startingChunkCoordinates[1]);
-            startingChunk = world.map[startingChunkX][startingChunkY];
+            JSONObject startingChunk = (JSONObject) worldData.get("startingChunk");
+
+            int startingChunkX = ((Long) startingChunk.get("x")).intValue();
+            int startingChunkY = ((Long) startingChunk.get("y")).intValue();
+            this.startingChunk = world.map[startingChunkX][startingChunkY];
 
 
-            String[] startingLocationCoordinates = reader.readLine().split(","); //1,1,0
-            int startingLocationX = Integer.parseInt(startingLocationCoordinates[0]);
-            int startingLocationY = Integer.parseInt(startingLocationCoordinates[1]);
-            int startingLocationZ = Integer.parseInt(startingLocationCoordinates[2]);
-            startingLocation = startingChunk.map[startingLocationX][startingLocationY][startingLocationZ];
+            JSONObject startingLocation = (JSONObject) worldData.get("startingLocation");
+
+            int startingLocationX = ((Long) startingLocation.get("x")).intValue();
+            int startingLocationY = ((Long) startingLocation.get("y")).intValue();
+            int startingLocationZ = ((Long) startingLocation.get("z")).intValue();
+            this.startingLocation = this.startingChunk.map[startingLocationX][startingLocationY][startingLocationZ];
         }
     }
 
-    private void loadChunk(BufferedReader reader) throws IOException {
-        Biome biome = Biome.valueOf(reader.readLine());
+    private void loadChunk(JSONObject chunkData) {
+        Biome biome = Biome.valueOf((String) chunkData.get("biome"));
         Location[][][] chunkMap = new Location[3][3][3];
+
+        JSONArray locations = (JSONArray) chunkData.get("locations");
+        Iterator locationIterator = locations.iterator();
 
         for (int z = 0; z < 3; z++) {
             for (int y = 0; y < 3; y++) {
                 for (int x = 0; x < 3; x++) {
-                    chunkMap[x][y][z] = new Location(x, y, z, LocationType.valueOf(reader.readLine()));
+                    String locationType = (String) locationIterator.next();
+                    chunkMap[x][y][z] = new Location(x, y, z,
+                            LocationType.valueOf(locationType));
                 }
             }
         }
         Chunk chunk = new Chunk(thingStore, recipeStore, world, biome, chunkMap);
-        int thingCount = Integer.parseInt(reader.readLine());
-        for (int i = 0; i < thingCount; i++) {
-            String id = reader.readLine();
-            //TODO old thing not new thing
-            Thing thing = thingStore.get(id).create();
-            String[] thingCoordinates = reader.readLine().split(",");
-            int thingX = Integer.parseInt(thingCoordinates[0]);
-            int thingY = Integer.parseInt(thingCoordinates[1]);
-            int thingZ = Integer.parseInt(thingCoordinates[2]);
+        JSONArray things = (JSONArray) chunkData.get("things");
+        for (Object thingJS : things) {
+            JSONObject thingData = (JSONObject) thingJS;
+            Thing thing = thingStore.get((String) thingData.get("type")).create();
+            int thingX = ((Long) thingData.get("x")).intValue();
+            int thingY = ((Long) thingData.get("y")).intValue();
+            int thingZ = ((Long) thingData.get("z")).intValue();
 
             chunkMap[thingX][thingY][thingZ].add(thing);
         }
 
 
-        String[] chunkCoordinates = reader.readLine().split(",");
-        int chunkX = Integer.parseInt(chunkCoordinates[0]);
-        int chunkY = Integer.parseInt(chunkCoordinates[1]);
+        int chunkX = ((Long) chunkData.get("x")).intValue();
+        int chunkY = ((Long) chunkData.get("y")).intValue();
         world.map[chunkX][chunkY] = chunk;
     }
 
