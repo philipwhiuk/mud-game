@@ -20,29 +20,152 @@
     "successMessage": "You successfully chop down the now FELLED-TREE",
     "failureMessage": "You fail to cut down the tree",
     "cancelledMessage": "You stop chopping down the tree"
-  },{
-  "id": "CUT-TREE-TO-LOGS",
-  "skillRequirements": [],
-  "percentageSuccessChance": 100,
-  "consumeItem": false,
-  "consumeTargetOnSuccess": true,
-  "targetMustBeInInventory": false,
-  "targetMustNotBeInInventory": true,
-  "consumables": [],
-  "successResultItems": [{
-    "item": "LOG",
-    "quantity": 5
-  }],
-  "successResultTargets": [],
-  "experienceGained": [
-    {
-      "skill": "Woodcutting",
-      "xp": 5
-    }
-  ],
-  "startMessage": "You start cutting the tree into logs",
-  "successMessage": "You successfully chop the tree into LOGs",
-  "failureMessage": "You fail to chop up the tree",
-  "cancelledMessage": "You stopping chopping up the tree"
-}
+  },
+  {
+    "id": "CUT-TREE-TO-LOGS",
+    "skillRequirements": [],
+    "percentageSuccessChance": 100,
+    "consumeItem": false,
+    "consumeTargetOnSuccess": true,
+    "targetMustBeInInventory": false,
+    "targetMustNotBeInInventory": true,
+    "consumables": [],
+    "successResultItems": [{
+      "item": "LOG",
+      "quantity": 5
+    }],
+    "successResultTargets": [],
+    "experienceGained": [
+      {
+        "skill": "Woodcutting",
+        "xp": 5
+      }
+    ],
+    "startMessage": "You start cutting the tree into logs",
+    "successMessage": "You successfully chop the tree into LOGs",
+    "failureMessage": "You fail to chop up the tree",
+    "cancelledMessage": "You stop chopping up the tree"
+  },
+  {
+    "id": "MINE-ROCK",
+    "skillRequirements": [],
+    "percentageSuccessChance": 100,
+    "consumeItem": false,
+    "consumeTargetOnSuccess": true,
+    "targetMustBeInInventory": false,
+    "targetMustNotBeInInventory": true,
+    "consumables": [],
+    "successResultItems": [{
+      "item": "ROCK-SHARDS",
+      "quantity": 2
+    }],
+    "successResultTargets": [],
+    "experienceGained": [
+      {
+        "skill": "Mining",
+        "xp": 7
+      }
+    ],
+    "startMessage": "You start mining the rock",
+    "successMessage": "You successfully mine some ROCK-SHARDS",
+    "failureMessage": "You fail to mine the rock",
+    "cancelledMessage": "You stop mining the rock"
+  },
+  {
+    "id": "MINE-TIN",
+    "skillRequirements": [],
+    "percentageSuccessChance": 100,
+    "consumeItem": false,
+    "consumeTargetOnSuccess": true,
+    "targetMustBeInInventory": false,
+    "targetMustNotBeInInventory": true,
+    "consumables": [],
+    "successResultItems": [{
+      "item": "TIN-ORE",
+      "quantity": 2
+    }],
+    "successResultTargets": [],
+    "experienceGained": [
+      {
+        "skill": "Mining",
+        "xp": 7
+      }
+    ],
+    "startMessage": "You start mining the tin vein",
+    "successMessage": "You successfully mine some TIN-ORE",
+    "failureMessage": "You fail to mine any tin ore",
+    "cancelledMessage": "You stop mining the tin vein"
+  },
+  {
+    "id": "MINE-COPPER",
+    "skillRequirements": [],
+    "percentageSuccessChance": 100,
+    "consumeItem": false,
+    "consumeTargetOnSuccess": true,
+    "targetMustBeInInventory": false,
+    "targetMustNotBeInInventory": true,
+    "consumables": [],
+    "successResultItems": [{
+      "item": "COPPER-ORE",
+      "quantity": 1
+    }],
+    "successResultTargets": [],
+    "experienceGained": [
+      {
+        "skill": "Mining",
+        "xp": 7
+      }
+    ],
+    "startMessage": "You start mining the copper vein",
+    "successMessage": "You successfully mine some COPPER-ORE",
+    "failureMessage": "You fail to mine any copper",
+    "cancelledMessage": "You stop mining the copper vein"
+  },
+  {
+    "id": "MINE-IRON",
+    "skillRequirements": [],
+    "percentageSuccessChance": 100,
+    "consumeItem": false,
+    "consumeTargetOnSuccess": true,
+    "targetMustBeInInventory": false,
+    "targetMustNotBeInInventory": true,
+    "consumables": [],
+    "successResultItems": [{
+      "item": "IRON-ORE",
+      "quantity": 1
+    }],
+    "successResultTargets": [],
+    "experienceGained": [
+      {
+        "skill": "Mining",
+        "xp": 25
+      }
+    ],
+    "startMessage": "You start mining the iron vein",
+    "successMessage": "You successfully mine some IRON-ORE",
+    "failureMessage": "You fail to mine any iron",
+    "cancelledMessage": "You stop mining the iron vein"
+  },
+  {
+    "id": "BURN-LOGS-FOR-FIRE",
+    "skillRequirements": [],
+    "percentageSuccessChance": 100,
+    "consumeItem": false,
+    "consumeTargetOnSuccess": true,
+    "targetMustBeInInventory": false,
+    "targetMustNotBeInInventory": false,
+    "consumables": [],
+    "successResultItems": [],
+    "successResultTargets": ["FIRE"],
+    "experienceGained": [
+      {
+        "skill": "Fire-making",
+        "xp": 15
+      }
+    ],
+    "startMessage": "You try to set the logs on fire",
+    "successMessage": "You successfully start a FIRE",
+    "failureMessage": "You fail to start a fire",
+    "cancelledMessage": "You stop trying to start a fire"
+  }
 ]

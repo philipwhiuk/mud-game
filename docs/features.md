@@ -12,10 +12,14 @@
 ## Scenario
 
 * 2 NPC types
+* 3 Metal vein types
+* 1 Wood type
 
 ## Skills
 
 * Woodcutting
+* Mining
+* Firemaking
 
 ## Items
 

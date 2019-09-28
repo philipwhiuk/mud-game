@@ -1,9 +1,33 @@
 [
   {
+    "type": "Equipment",
+    "slot": "MAIN_HAND",
+    "id": "AXE",
+    "name": "Axe",
+    "description": "A bronze woodcutting axe"
+  },
+  {
+    "type": "Equipment",
+    "slot": "MAIN_HAND",
+    "id": "PICKAXE",
+    "name": "Pickaxe",
+    "description": "A bronze pickaxe"
+  },
+  {
     "type": "Item",
     "id": "LOG",
     "name": "Log",
-    "recipes": []
+    "recipes": [
+      {
+        "itemType": "TINDERBOX",
+        "recipes": [
+          {
+            "id": "FIRE",
+            "recipeId": "BURN-LOGS-FOR-FIRE"
+          }
+        ]
+      }
+    ]
   },
   {
     "type": "Object",
@@ -36,6 +60,132 @@
   },
   {
     "type": "Tree",
-    "id": "OAK-TREE"
+    "id": "OAK-TREE",
+    "description": "An ancient oak tree"
+  },
+  {
+    "type": "Object",
+    "id": "ROCK",
+    "description": "A rocky outcrop",
+    "recipes": [
+      {
+        "itemType": "PICKAXE",
+        "recipes": [
+          {
+            "id": "MINE",
+            "recipeId": "MINE-ROCK"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "Object",
+    "id": "TIN-VEIN",
+    "description": "A vein of tin",
+    "recipes": [
+      {
+        "itemType": "PICKAXE",
+        "recipes": [
+          {
+            "id": "MINE",
+            "recipeId": "MINE-TIN"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "Object",
+    "id": "COPPER-VEIN",
+    "description": "A vein of copper",
+    "recipes": [
+      {
+        "itemType": "PICKAXE",
+        "recipes": [
+          {
+            "id": "MINE",
+            "recipeId": "MINE-COPPER"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "Object",
+    "id": "IRON-VEIN",
+    "description": "A vein of iron",
+    "recipes": [
+      {
+        "itemType": "PICKAXE",
+        "recipes": [
+          {
+            "id": "MINE",
+            "recipeId": "MINE-IRON"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "Object",
+    "id": "FURNACE",
+    "description": "A fiery furnace",
+    "recipes": [
+      {
+        "itemType": "TIN-ORE",
+        "recipes": [
+          {
+            "id": "SMELT",
+            "recipeId": "SMELT-TIN"
+          }
+        ]
+      },
+      {
+        "itemType": "COPPER-ORE",
+        "recipes": [
+          {
+            "id": "SMELT",
+            "recipeId": "SMELT-COPPER"
+          }
+        ]
+      },
+      {
+        "itemType": "IRON-ORE",
+        "recipes": [
+          {
+            "id": "SMELT",
+            "recipeId": "SMELT-IRON"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "Object",
+    "id": "ROCK-SHARDS",
+    "description": "A pile of rock shards",
+    "recipes": []
+  },
+  {
+    "type": "Item",
+    "id": "TINDERBOX",
+    "name": "Tinderbox",
+    "description": "A box with some steel and flint",
+    "recipes": []
+  },
+  {
+    "type": "Equipment",
+    "slot": "MAIN_HAND",
+    "id": "HAMMER",
+    "name": "Hammer",
+    "description": "A box with some steel and flint",
+    "recipes": []
+  },
+  {
+    "type": "Object",
+    "id": "FIRE",
+    "description": "A burning fire",
+    "recipes": []
   }
 ]
