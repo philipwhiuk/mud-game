@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+@SuppressWarnings("unchecked")
 public class ThingStore {
     private HashMap<String, ThingType> thingTypes;
 
@@ -28,34 +29,40 @@ public class ThingStore {
             ThingType thing;
             String type = (String) thingTypeData.get("type");
             String id = (String) thingTypeData.get("id");
-            switch (type) {
-                case "Animal":
-                    thing = new AnimalType(
-                            id,
-                            (String) thingTypeData.get("description"),
-                            ((Long) thingTypeData.get("maxHealth")).intValue(),
-                            FeedingType.valueOf((String) thingTypeData.get("feedingType")));
-                    break;
-                case "Equipment":
-                    thing = new EquipmentType(id,
-                            (String) thingTypeData.get("name"),
-                            Slot.valueOf((String) thingTypeData.get("slot")));
-                    break;
-                case "Item":
-                    thing = new ItemType(id,
-                            (String) thingTypeData.get("name"),
-                            parseRecipes((JSONArray) thingTypeData.get("recipes")));
-                    break;
-                case "Object":
-                    thing = new ObjectType(id, (String) thingTypeData.get("description"), parseRecipes((JSONArray) thingTypeData.get("recipes")));
-                    break;
-                case "Tree":
-                    thing = new TreeType(id);
-                    break;
-                default:
-                    throw new UnsupportedOperationException(type);
+            try {
+                switch (type) {
+                    case "Animal":
+                        thing = new AnimalType(
+                                id,
+                                (String) thingTypeData.get("description"),
+                                ((Long) thingTypeData.get("maxHealth")).intValue(),
+                                FeedingType.valueOf((String) thingTypeData.get("feedingType")));
+                        break;
+                    case "Equipment":
+                        thing = new EquipmentType(id,
+                                (String) thingTypeData.get("name"),
+                                parseRecipes((JSONArray) thingTypeData.getOrDefault("recipes", new JSONArray())),
+                                Slot.valueOf((String) thingTypeData.get("slot")));
+                        break;
+                    case "Item":
+                        thing = new ItemType(id,
+                                (String) thingTypeData.get("name"),
+                                parseRecipes((JSONArray) thingTypeData.getOrDefault("recipes", new JSONArray())));
+                        break;
+                    case "Object":
+                        thing = new ObjectType(id, (String) thingTypeData.get("description"),
+                                parseRecipes((JSONArray) thingTypeData.getOrDefault("recipes", new JSONArray())));
+                        break;
+                    case "Tree":
+                        thing = new TreeType(id);
+                        break;
+                    default:
+                        throw new UnsupportedOperationException(type);
+                }
+                thingTypes.put(id, thing);
+            } catch (Exception e) {
+                throw new RuntimeException("Failed to parse thing: " + id, e);
             }
-            thingTypes.put(id, thing);
         }
 
     }
@@ -65,7 +72,8 @@ public class ThingStore {
         for (Object aRecipesData : recipesData) {
             JSONObject itemTypeData = (JSONObject) aRecipesData;
             Map<String, String> itemTypeRecipes = new HashMap<>();
-            JSONArray itemTypeRecipesData = (JSONArray) itemTypeData.get("recipes");
+            JSONArray itemTypeRecipesData = (JSONArray) itemTypeData.getOrDefault("recipes",
+                    new JSONArray());
             for (Object anItemTypeRecipesData : itemTypeRecipesData) {
                 JSONObject recipeData = (JSONObject) anItemTypeRecipesData;
                 itemTypeRecipes.put(

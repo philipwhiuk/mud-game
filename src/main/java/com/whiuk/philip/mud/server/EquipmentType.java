@@ -1,12 +1,16 @@
 package com.whiuk.philip.mud.server;
 
-import java.util.Collections;
+import java.util.Map;
 
 public class EquipmentType extends ItemType {
     public Slot slot;
 
-    EquipmentType(String id, String name, Slot slot) {
-        super(id, name, Collections.emptyMap());
+    EquipmentType(String id, String name, Map<String, Map<String, String>> recipes, Slot slot) {
+        super(id, name, recipes);
         this.slot = slot;
+    }
+
+    public Equipment create() {
+        return new Equipment(this);
     }
 }

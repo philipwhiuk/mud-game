@@ -7,18 +7,19 @@ import java.util.Map;
 class AccountManager {
     private Map<String, Account> accounts = new HashMap<>();
     private World world;
+    private ThingStore thingStore;
 
-    public void init(World world, Chunk startingChunk, Location startingLocation) {
+    public void init(ThingStore thingStore, World world, Chunk startingChunk, Location startingLocation) {
         this.world = world;
-        loadAccounts(startingChunk, startingLocation);
+        loadAccounts(thingStore, startingChunk, startingLocation);
     }
 
-    private void loadAccounts(Chunk startingChunk, Location startingLocation) {
+    private void loadAccounts(ThingStore thingStore,
+                              Chunk startingChunk, Location startingLocation) {
         Account a = new Account("a", "b");
         PlayerCharacter p = new PlayerCharacter(
                 a, "Thurgo", startingChunk, startingLocation, new Inventory(), Collections.emptyMap(), Collections.emptyMap());
-        EquipmentType ironAxe = new EquipmentType("AXE", "Iron axe", Slot.MAIN_HAND);
-        p.receiveItem(new Item(ironAxe));
+        p.receiveItem((Equipment) thingStore.get("AXE").create());
         a.setCharacter(p);
 
         accounts.put(a.username, a);

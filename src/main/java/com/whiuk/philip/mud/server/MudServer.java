@@ -115,7 +115,7 @@ public class MudServer {
         thingStore = new ThingStore();
         recipeStore = new RecipeStore(thingStore);
         loadWorld();
-        accountManager.init(world, startingChunk, startingLocation);
+        accountManager.init(thingStore, world, startingChunk, startingLocation);
     }
 
     private void loadWorld() throws IOException, ParseException {

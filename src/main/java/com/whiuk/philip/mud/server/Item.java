@@ -8,6 +8,9 @@ class ItemType extends ThingType {
 
     ItemType(String id, String name, Map<String, Map<String, String>> recipes) {
         super(id, recipes);
+        if (name == null) {
+            throw new IllegalArgumentException("Name must not be null");
+        }
         this.name = name;
     }
 
